@@ -18,5 +18,6 @@ EXPOSE 80
 
 # Command that will run when the container start
 # Start Apache in foreground
+# As a rule of tumb, use the command that you will normally run to start the server.
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
