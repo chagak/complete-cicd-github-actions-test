@@ -5,11 +5,11 @@
 # ================================================================
 
 # Set basic environment variables
-export S3_URI='s3://dev-aosnote-webfiles/V1__nest.sql'
-export RDS_ENDPOINT='dev-nest-db.cu2idoemakwo.us-east-1.rds.amazonaws.com'
-export FLYWAY_VERSION='11.15.0'
+export S3_URI='s3://dev-chaganote-app-webfiles/V1__nest.sql'
+export RDS_ENDPOINT='dev-nest-db.c7at4o11vsnc.us-east-1.rds.amazonaws.com'
+export FLYWAY_VERSION='11.16.0'
 export RDS_DB_NAME='applicationdb'
-export SECRET_NAME='rds!db-e99e260d-3aaf-44fa-ae2d-93724c7f167e'
+export SECRET_NAME='rds!db-db02d398-3122-4201-8faa-415aa2c11483'
 export AWS_REGION='us-east-1'
 
 # ================================================================
