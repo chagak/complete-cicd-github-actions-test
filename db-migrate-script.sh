@@ -28,7 +28,7 @@ echo "AWS_REGION: $AWS_REGION"
 # Retrieve RDS database credentials from AWS Secrets Manager
 # ================================================================
 
-# Install jq if not available (for JSON parsing)
+# Install jq if not available (for JSON parsing, for editing JSON file)
 sudo yum install -y jq
 
 # Retrieve secret from Secrets Manager
