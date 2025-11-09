@@ -9,7 +9,7 @@ export PROJECT_NAME='nest' # the name of your project
 export ENVIRONMENT='dev' # the environment that the app will be deployed 
 export RECORD_NAME='www' # the sub-domain name
 export DOMAIN_NAME='fodek.homes' # the domain name 
-export S3_BUCKET_NAME='dev-chaganote-app-webfiles ' # the name of the s3 bucket containing your application code
+export S3_BUCKET_NAME='dev-chaganote-app-webfiles' # the name of the s3 bucket containing your application code
 export SERVICE_PROVIDER_FILE_NAME='NestAppServiceProvider' # the name of the service provider file
 export APPLICATION_CODE_FILE_NAME='nest' # the name of the zip file containing your application code 
 export RDS_ENDPOINT='dev-nest-db.c7at4o11vsnc.us-east-1.rds.amazonaws.com' # your rds endpoint.amazonaws.com
@@ -55,7 +55,7 @@ export RDS_DB_PASSWORD=$(echo $SECRET_JSON | jq -r '.password')
 # ================================================================
 # Install server dependencies
 # ================================================================
-
+#sudo yum install -y httpd
 # Update all packages
 sudo yum update -y
 
@@ -107,7 +107,11 @@ sudo sed -i "/^APP_URL=/ s|=.*$|=https://${RECORD_NAME}.${DOMAIN_NAME}/|" .env
 sudo sed -i "/^DB_HOST=/ s|=.*$|=${RDS_ENDPOINT}|" .env
 sudo sed -i "/^DB_DATABASE=/ s|=.*$|=${RDS_DB_NAME}|" .env
 sudo sed -i "/^DB_USERNAME=/ s|=.*$|=${RDS_DB_USERNAME}|" .env
-sudo sed -i "/^DB_PASSWORD=/ s|=.*$|=${RDS_DB_PASSWORD}|" .env
+ESCAPED_PASS=$(printf '%s\n' "$RDS_DB_PASSWORD" | sed 's/[\/&]/\\&/g')  
+#sudo sed -i "s/^DB_PASSWORD=.*/DB_PASSWORD=${ESCAPED_PASS}/" .env
+
+# Update the line using awk (if sed still fails)
+awk -v val="$RDS_DB_PASSWORD" '/^DB_PASSWORD=/ {$0="DB_PASSWORD="val}1' .env | sudo tee .env > /dev/null
 
 # ================================================================
 # verify .env contents
