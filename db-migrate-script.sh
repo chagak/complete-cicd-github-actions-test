@@ -6,10 +6,10 @@
 
 # Set basic environment variables
 export S3_URI='s3://dev-chaganote-app-webfiles/V1__shopwise.sql'
-export RDS_ENDPOINT='dev-shopwise-db.c7at4o11vsnc.us-east-1.rds.amazonaws.com'
+export RDS_ENDPOINT='dev-nest-db.c7at4o11vsnc.us-east-1.rds.amazonaws.com'
 export FLYWAY_VERSION='11.16.0'
 export RDS_DB_NAME='applicationdb'
-export SECRET_NAME='rds!db-b442bfa0-ae47-455b-8752-a137586c660f'
+export SECRET_NAME='rds!db-b57889a5-88d4-401f-8c8d-5a402209f9ff'
 export AWS_REGION='us-east-1'
 
 # ================================================================
@@ -67,3 +67,24 @@ sudo flyway -url=jdbc:mysql://${RDS_ENDPOINT}:3306/${RDS_DB_NAME}?allowPublicKey
   -password="${RDS_DB_PASSWORD}" \
   -locations=filesystem:sql \
   migrate
+
+
+#===========================================================================
+# Check if the data was migrated into the RDS
+#===========================================================================
+
+# Install mysql
+sudo dnf install -y mariadb105
+
+# Connect to The RDS Database
+mysql -h $RDS_ENDPOINT -u $RDS_DB_USERNAME -p ${RDS_DB_PASSWORD}
+
+
+# Verify Data Existence
+SHOW DATABASES; # this will display the database created in our case applicationdb
+
+# Change Database to applicationdb
+USE applicationdb;
+
+# To show the content of the applicationdb
+SHOW TABLES;
